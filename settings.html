@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>URL Blocker Settings</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=672">
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #f4f6fb;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 672px;
+      margin: 20px auto;
+      padding: 0 32px;
+    }
+    h1 {
+      font-size: 1.3em;
+      margin-bottom: 12px;
+      color: #2d3a4a;
+      font-weight: 600;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      font-size: 1em;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+    }
+    button {
+      background: #2563eb;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 7px 16px;
+      font-size: 1em;
+      cursor: pointer;
+      margin-top: 0;
+      margin-bottom: 10px;
+      transition: background 0.2s;
+    }
+    button:hover {
+      background: #174ea6;
+    }
+    h3 {
+      font-size: 1em;
+      margin-top: 18px;
+      margin-bottom: 8px;
+      color: #374151;
+      font-weight: 500;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    li {
+      background: #f1f5f9;
+      border-radius: 6px;
+      margin-bottom: 7px;
+      padding: 7px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.98em;
+    }
+    .remove-btn {
+      background: #ef4444;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 3px 10px;
+      font-size: 0.95em;
+      cursor: pointer;
+      margin-left: 10px;
+      transition: background 0.2s;
+    }
+    .remove-btn:hover {
+      background: #b91c1c;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>URL Blocker Settings</h1>
+    <input type="text" id="blockurl" placeholder="Enter URL or pattern to block (e.g. *example.com/*)" />
+    <button id="clickme">Block URL</button>
+    <h3 style="display:flex;align-items:center;gap:12px;">
+      Default Blocked URLs
+      <input type="checkbox" id="toggleDefaultBlocked" style="transform:scale(1.3);margin-left:8px;vertical-align:middle;" />
+    </h3>
+    <ul id="defaultBlockedList"></ul>
+    <h3>Your Blocked URLs</h3>
+    <ul id="blockedList"></ul>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
