@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "My Chrome Extension",
+  "name": "ScamBlocker",
   "version": "1.0",
-  "description": "A boilerplate Chrome extension.",
+  "description": "ScamBlocker: Warns about suspicious emails and blocks scam URLs.",
   "action": {},
   "background": {
     "service_worker": "background.js"

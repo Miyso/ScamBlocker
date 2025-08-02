@@ -1,3 +1,27 @@
+// Extracts the body text of the currently opened email for all providers
+function getEmailBody() {
+  let bodyText = '';
+  if (window.location.hostname.includes('mail.google.com')) {
+    const bodyDiv = document.querySelector('div.a3s');
+    if (bodyDiv) bodyText = bodyDiv.textContent || '';
+  } else if (window.location.hostname.includes('outlook.live.com')) {
+    const readingPane = document.getElementById('Skip to message-region');
+    if (readingPane) {
+      const bodySpan = readingPane.querySelector('div[role="document"]');
+      if (bodySpan) bodyText = bodySpan.textContent || '';
+    }
+  } else if (window.location.hostname.includes('mail.yahoo.com')) {
+    const bodyDiv = document.querySelector('div[data-test-id="message-view-body"]');
+    if (bodyDiv) bodyText = bodyDiv.textContent || '';
+  } else if (window.location.hostname.includes('mail.proton.me')) {
+    const bodyDiv = document.querySelector('div[data-testid="message-body"]');
+    if (bodyDiv) bodyText = bodyDiv.textContent || '';
+  } else if (window.location.hostname.includes('mail.zoho.com')) {
+    const bodyDiv = document.querySelector('div.zmMsgView');
+    if (bodyDiv) bodyText = bodyDiv.textContent || '';
+  }
+  return bodyText;
+}
 // content-email-banner.js
 // Injects a banner showing the current 'from' email address on supported webmail sites
 
@@ -5,126 +29,131 @@
 function getSenderAddress() {
   // Gmail
   if (window.location.hostname.includes('mail.google.com')) {
-    // Try multiple selectors for sender
-    let sender = null;
-    // 1. Opened email header (new Gmail)
+    let gmailSender = null;
     const header = document.querySelector('div[data-header-id]');
     if (header) {
       const senderSpan = header.querySelector('span[email]');
       if (senderSpan && senderSpan.getAttribute('email')) {
-        sender = senderSpan.getAttribute('email');
-        console.log('[Copilot Extension] Gmail sender found via span[email]:', sender);
+        gmailSender = senderSpan.getAttribute('email');
+        console.log('[ScamBlocker] Gmail sender found via span[email]:', gmailSender);
       }
     }
-    // 2. Fallback: span.gD (old Gmail)
-    if (!sender) {
+    if (!gmailSender) {
       const fallback = document.querySelector('span.gD');
       if (fallback && fallback.getAttribute('email')) {
-        sender = fallback.getAttribute('email');
-        console.log('[Copilot Extension] Gmail sender found via span.gD[email]:', sender);
+        gmailSender = fallback.getAttribute('email');
+        console.log('[ScamBlocker] Gmail sender found via span.gD[email]:', gmailSender);
       } else if (fallback && fallback.textContent.includes('@')) {
-        sender = fallback.textContent.trim();
-        console.log('[Copilot Extension] Gmail sender found via span.gD text:', sender);
+        gmailSender = fallback.textContent.trim();
+        console.log('[ScamBlocker] Gmail sender found via span.gD text:', gmailSender);
       }
     }
-    // 3. Try address in opened message details
-    if (!sender) {
+    if (!gmailSender) {
       const details = document.querySelector('span[email]');
       if (details && details.getAttribute('email')) {
-        sender = details.getAttribute('email');
-        console.log('[Copilot Extension] Gmail sender found via details span[email]:', sender);
+        gmailSender = details.getAttribute('email');
+        console.log('[ScamBlocker] Gmail sender found via details span[email]:', gmailSender);
       }
     }
-    if (!sender) console.warn('[Copilot Extension] Gmail sender not found');
-    return sender;
+    if (!gmailSender) console.warn('[ScamBlocker] Gmail sender not found');
+    return gmailSender;
   }
   // Outlook
   if (window.location.hostname.includes('outlook.live.com')) {
-    let sender = null;
-    const readingPane = document.querySelector('span._3YeAx');
-    if (readingPane && readingPane.textContent.includes('@')) {
-      sender = readingPane.textContent.trim();
-      console.log('[Copilot Extension] Outlook sender found via span._3YeAx:', sender);
-    }
-    if (!sender) {
-      const senderFallback = document.querySelector('span[title*="@"]');
-      if (senderFallback) {
-        sender = senderFallback.textContent.trim();
-        console.log('[Copilot Extension] Outlook sender found via span[title*="@"]:', sender);
+    let outlookSender = null;
+    const readingPane = document.getElementById('Skip to message-region');
+    if (readingPane) {
+      const span = readingPane.querySelector('span.OZZZK');
+      if (span) {
+        const match = span.textContent.match(/<([^>]+)>/);
+        if (match) {
+          outlookSender = match[1].trim();
+          console.log('[ScamBlocker] Outlook sender found via span.OZZZK:', outlookSender);
+        } else {
+          const text = span.textContent.trim();
+          if (/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(text)) {
+            outlookSender = text;
+            console.log('[ScamBlocker] Outlook sender found as email address in span.OZZZK:', outlookSender);
+          } else {
+            console.warn('[ScamBlocker] Could not extract sender from span.OZZZK:', span.textContent);
+          }
+        }
+      } else {
+        console.warn('[ScamBlocker] No span.OZZZK found for sender extraction');
       }
     }
-    if (!sender) console.warn('[Copilot Extension] Outlook sender not found');
-    return sender;
+    if (!outlookSender) console.warn('[ScamBlocker] Outlook sender not found');
+    return outlookSender;
   }
   // Yahoo
   if (window.location.hostname.includes('mail.yahoo.com')) {
-    let sender = null;
+    let yahooSender = null;
     const mainSender = document.querySelector('span[data-test-id="message-view-sender"]');
     if (mainSender && mainSender.textContent.includes('@')) {
-      sender = mainSender.textContent.trim();
-      console.log('[Copilot Extension] Yahoo sender found via message-view-sender:', sender);
+      yahooSender = mainSender.textContent.trim();
+      console.log('[ScamBlocker] Yahoo sender found via message-view-sender:', yahooSender);
     }
-    if (!sender) {
+    if (!yahooSender) {
       const senderFallback = document.querySelector('span[data-test-id="message-sender-email"]');
       if (senderFallback && senderFallback.textContent.includes('@')) {
-        sender = senderFallback.textContent.trim();
-        console.log('[Copilot Extension] Yahoo sender found via message-sender-email:', sender);
+        yahooSender = senderFallback.textContent.trim();
+        console.log('[ScamBlocker] Yahoo sender found via message-sender-email:', yahooSender);
       }
     }
-    if (!sender) console.warn('[Copilot Extension] Yahoo sender not found');
-    return sender;
+    if (!yahooSender) console.warn('[ScamBlocker] Yahoo sender not found');
+    return yahooSender;
   }
   // ProtonMail
   if (window.location.hostname.includes('mail.proton.me')) {
-    let sender = null;
+    let protonSender = null;
     const senderSpan = document.querySelector('span[data-testid="message-sender-email"]');
     if (senderSpan && senderSpan.textContent.includes('@')) {
-      sender = senderSpan.textContent.trim();
-      console.log('[Copilot Extension] ProtonMail sender found:', sender);
+      protonSender = senderSpan.textContent.trim();
+      console.log('[ScamBlocker] ProtonMail sender found:', protonSender);
     }
-    if (!sender) console.warn('[Copilot Extension] ProtonMail sender not found');
-    return sender;
+    if (!protonSender) console.warn('[ScamBlocker] ProtonMail sender not found');
+    return protonSender;
   }
   // Zoho Mail
   if (window.location.hostname.includes('mail.zoho.com')) {
-    let sender = null;
+    let zohoSender = null;
     const senderSpan = document.querySelector('span.zmSenderEmail');
     if (senderSpan && senderSpan.textContent.includes('@')) {
-      sender = senderSpan.textContent.trim();
-      console.log('[Copilot Extension] Zoho sender found:', sender);
+      zohoSender = senderSpan.textContent.trim();
+      console.log('[ScamBlocker] Zoho sender found:', zohoSender);
     }
-    if (!sender) console.warn('[Copilot Extension] Zoho sender not found');
-    return sender;
+    if (!zohoSender) console.warn('[ScamBlocker] Zoho sender not found');
+    return zohoSender;
   }
-  console.warn('[Copilot Extension] Sender not found for this webmail');
+  console.warn('[ScamBlocker] Sender not found for this webmail');
   return null;
 }
 
-
+      console.log('[ScamBlocker] Warning banner injected inside email box:', emailBox);
 function injectBanner(email) {
-  if (!email) return;
+      console.warn('[ScamBlocker] Email box element not found. Warning banner not injected.');
   if (document.getElementById('copilot-email-banner')) return;
-  const banner = document.createElement('div');
+      console.log('[ScamBlocker] Warning banner injected inside email box:', emailBox);
   banner.id = 'copilot-email-banner';
-  banner.textContent = `Sender: ${email}`;
+      console.warn('[ScamBlocker] Email box element not found. Warning banner not injected.');
   banner.style.position = 'fixed';
-  banner.style.top = '0';
+      console.log('[ScamBlocker] Warning banner injected inside email box:', emailBox);
   banner.style.left = '0';
-  banner.style.width = '100%';
+      console.warn('[ScamBlocker] Email box element not found. Warning banner not injected.');
   banner.style.background = '#2563eb';
-  banner.style.color = '#fff';
+      console.log('[ScamBlocker] Warning banner injected inside email box:', emailBox);
   banner.style.fontSize = '1.15em';
-  banner.style.fontWeight = 'bold';
+      console.warn('[ScamBlocker] Email box element not found. Warning banner not injected.');
   banner.style.padding = '10px 0';
-  banner.style.zIndex = '9999';
+  console.log('[ScamBlocker] Running tryInjectOnce');
   banner.style.textAlign = 'center';
-  banner.style.boxShadow = '0 2px 8px rgba(0,0,0,0.08)';
+  console.log('[ScamBlocker] Extracted sender:', sender);
   document.body.appendChild(banner);
-}
+  console.log('[ScamBlocker] Extracted subject:', subject);
 
+    console.log('[ScamBlocker] Email or subject changed, updating banner');
 
-
-function tryInject() {
+    console.log('[ScamBlocker] Sender and subject unchanged, not updating banner');
   const email = getSenderAddress();
   const oldBanner = document.getElementById('copilot-email-banner');
   if (email) {
@@ -142,7 +171,7 @@ let injectTimeout = null;
 let KNOWN_GOOD_SENDERS = [];
 
 function loadKnownGoodSenders(callback) {
-  fetch('https://raw.githubusercontent.com/yourusername/yourrepo/main/known_good_senders.json')
+  fetch('https://raw.githubusercontent.com/Miyso/ScamBlocker/main/known_good_senders.json')
     .then(response => response.json())
     .then(json => {
       KNOWN_GOOD_SENDERS = json;
@@ -178,16 +207,29 @@ function getEmailSubject() {
   // Outlook
   if (window.location.hostname.includes('outlook.live.com')) {
     let subject = null;
-    const subjectDiv = document.querySelector('div._3KxvI');
-    if (subjectDiv) {
-      subject = subjectDiv.textContent.trim();
-      console.log('[Copilot Extension] Outlook subject found via div._3KxvI:', subject);
-    }
-    if (!subject) {
-      const subjectFallback = document.querySelector('div[role="heading"]');
-      if (subjectFallback) {
-        subject = subjectFallback.textContent.trim();
-        console.log('[Copilot Extension] Outlook subject found via div[role="heading"]:', subject);
+    // Only scan for subject in the currently opened/focused email inside the reading pane region
+    const readingPane = document.getElementById('Skip to message-region');
+    if (readingPane) {
+      // Find the first span.OZZZK inside the reading pane
+      const span = readingPane.querySelector('span.OZZZK');
+      if (span) {
+        // If format is PayPal<service@paypal.com>
+        const match = span.textContent.match(/^([^<]+)/);
+        if (match && match[1].trim()) {
+          subject = match[1].trim();
+          console.log('[Copilot Extension] Outlook subject found via span.OZZZK:', subject);
+        } else {
+          // If no <...>, check if text looks like an email address
+          const text = span.textContent.trim();
+          if (/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(text)) {
+            subject = text;
+            console.log('[Copilot Extension] Outlook subject found as email address in span.OZZZK:', subject);
+          } else {
+            console.warn('[Copilot Extension] Could not extract subject from span.OZZZK:', span.textContent);
+          }
+        }
+      } else {
+        console.warn('[Copilot Extension] No span.OZZZK found for subject extraction');
       }
     }
     if (!subject) console.warn('[Copilot Extension] Outlook subject not found');
@@ -242,50 +284,163 @@ function normalize(str) {
   return str.toLowerCase().replace(/[^a-z0-9]/g, '');
 }
 
+
+let showSenderBanner = false;
+let scanSubjectForImpersonation = true;
+let scanBodyForImpersonation = false;
+
+chrome.storage.sync.get([
+  'showSenderBanner',
+  'scanSubjectForImpersonation',
+  'scanBodyForImpersonation'
+], (result) => {
+  showSenderBanner = result.showSenderBanner !== false;
+  scanSubjectForImpersonation = !!result.scanSubjectForImpersonation;
+  scanBodyForImpersonation = !!result.scanBodyForImpersonation;
+});
+
+chrome.storage.onChanged.addListener((changes, area) => {
+  if (area === 'sync') {
+    if (changes.showSenderBanner) showSenderBanner = changes.showSenderBanner.newValue !== false;
+    if (changes.scanSubjectForImpersonation) scanSubjectForImpersonation = !!changes.scanSubjectForImpersonation.newValue;
+    if (changes.scanBodyForImpersonation) scanBodyForImpersonation = !!changes.scanBodyForImpersonation.newValue;
+  }
+});
+
 function checkSenderWarning(sender, subject) {
   console.log('[Copilot Extension] Checking sender warning:', { sender, subject });
   if (!sender || !subject) return null;
+  let warning = null;
   const normSubject = normalize(subject);
+  let normBody = '';
+  if (scanBodyForImpersonation) {
+    const bodyText = getEmailBody();
+    normBody = normalize(bodyText);
+  }
   for (const entry of KNOWN_GOOD_SENDERS) {
     const normCompany = normalize(entry.company);
-    if (normSubject.includes(normCompany)) {
-      // Only return null if sender matches the email for this company
+    const normEmail = normalize(entry.email);
+    // Scan subject for impersonation attempts
+    if (scanSubjectForImpersonation && normSubject.includes(normCompany)) {
       if (sender.trim().toLowerCase() === entry.email.trim().toLowerCase()) {
         console.log(`[Copilot Extension] Sender matches known good for ${entry.company}:`, sender);
-        return null;
+        warning = null;
       } else {
         console.warn(`[Copilot Extension] WARNING: Sender does not match known good for ${entry.company}. Sender: ${sender}, Expected: ${entry.email}`);
-        return `Warning: This email claims to be from ${entry.company}, but the sender address (${sender}) does not match the known good address (${entry.email}).`;
+        warning = `Warning: This email claims to be from ${entry.company}, but the sender address (${sender}) does not match the known good address (${entry.email}).`;
+      }
+    }
+    // Scan body for impersonation attempts (only if enabled)
+    if (scanBodyForImpersonation && (normBody.includes(normCompany) || normBody.includes(normEmail))) {
+      if (sender.trim().toLowerCase() !== entry.email.trim().toLowerCase()) {
+        console.warn(`[Copilot Extension] WARNING: Email body mentions ${entry.company} or ${entry.email}, but sender does not match. Sender: ${sender}, Expected: ${entry.email}`);
+        warning = `Warning: This email body mentions ${entry.company} or ${entry.email}, but the sender address (${sender}) does not match the known good address (${entry.email}).`;
       }
     }
   }
-  return null;
+  return warning;
 }
 
+
 function injectBanner(email, warning) {
-  if (warning) {
-    console.warn('[Copilot Extension] Injecting warning banner:', warning);
-  } else if (email) {
-    console.log('[Copilot Extension] Injecting sender banner:', email);
-  }
-  if (!email && !warning) return;
-  if (document.getElementById('copilot-email-banner')) document.getElementById('copilot-email-banner').remove();
+  // Only show sender banner if enabled
+  if (!showSenderBanner) return;
+  if (!warning) return;
+  console.warn('[Copilot Extension] Injecting warning banner:', warning);
+  // Remove any existing banner
+  const oldBanner = document.getElementById('copilot-email-banner');
+  if (oldBanner) oldBanner.remove();
+
+  // Create warning banner only
   const banner = document.createElement('div');
   banner.id = 'copilot-email-banner';
-  banner.style.position = 'fixed';
-  banner.style.top = '0';
-  banner.style.left = '0';
-  banner.style.width = '100%';
-  banner.style.background = warning ? '#b91c1c' : '#2563eb';
+  banner.style.background = 'linear-gradient(90deg,#b91c1c 0%,#ef4444 100%)';
   banner.style.color = '#fff';
-  banner.style.fontSize = '1.15em';
+  banner.style.fontSize = '1.08em';
   banner.style.fontWeight = 'bold';
-  banner.style.padding = '10px 0';
-  banner.style.zIndex = '9999';
+  banner.style.padding = '4px 0';
+  banner.style.borderRadius = '8px';
+  banner.style.margin = '0 0 12px 0';
+  banner.style.boxShadow = '0 2px 12px rgba(0,0,0,0.10)';
   banner.style.textAlign = 'center';
-  banner.style.boxShadow = '0 2px 8px rgba(0,0,0,0.08)';
-  banner.textContent = warning ? warning : `Sender: ${email}`;
-  document.body.appendChild(banner);
+  banner.style.letterSpacing = '0.5px';
+  banner.style.border = '2px solid #991b1b';
+  banner.style.zIndex = '2147483647';
+  banner.textContent = warning;
+
+  // Try to inject banner inside the main email box/container
+  let emailBox = null;
+  if (window.location.hostname.includes('mail.google.com')) {
+    emailBox = document.querySelector('div[role="main"]');
+    if (emailBox) {
+      emailBox.insertBefore(banner, emailBox.firstChild);
+      banner.style.position = 'relative';
+      banner.style.width = '95%';
+      banner.style.margin = '8px auto';
+      banner.style.marginBottom = '8px';
+      banner.style.zIndex = '2147483647';
+      console.log('[Copilot Extension] Warning banner injected inside email box:', emailBox);
+    } else {
+      console.warn('[Copilot Extension] Email box element not found. Warning banner not injected.');
+    }
+  } else if (window.location.hostname.includes('outlook.live.com')) {
+    // Insert banner inside the wide-content-host div for the message region
+    const wideContent = document.querySelector('div.wide-content-host');
+    if (wideContent) {
+      const wrapper = document.createElement('div');
+      wrapper.style.width = '100%';
+      wrapper.style.display = 'block';
+      wrapper.appendChild(banner);
+      wideContent.insertBefore(wrapper, wideContent.firstChild);
+      banner.style.position = 'relative';
+      banner.style.width = '95%';
+      banner.style.margin = '8px auto';
+      banner.style.marginBottom = '8px';
+      banner.style.zIndex = '2147483647';
+      console.log('[Copilot Extension] Warning banner injected inside wide-content-host container:', wideContent);
+    } else {
+      console.warn('[Copilot Extension] wide-content-host container not found. Warning banner not injected.');
+    }
+  } else if (window.location.hostname.includes('mail.yahoo.com')) {
+    emailBox = document.querySelector('div[data-test-id="message-view-body"]') || document.querySelector('div[data-test-id="message-view"]');
+    if (emailBox) {
+      emailBox.insertBefore(banner, emailBox.firstChild);
+      banner.style.position = 'relative';
+      banner.style.width = '95%';
+      banner.style.margin = '8px auto';
+      banner.style.marginBottom = '8px';
+      banner.style.zIndex = '2147483647';
+      console.log('[Copilot Extension] Warning banner injected inside email box:', emailBox);
+    } else {
+      console.warn('[Copilot Extension] Email box element not found. Warning banner not injected.');
+    }
+  } else if (window.location.hostname.includes('mail.proton.me')) {
+    emailBox = document.querySelector('main') || document.querySelector('div[role="main"]');
+    if (emailBox) {
+      emailBox.insertBefore(banner, emailBox.firstChild);
+      banner.style.position = 'relative';
+      banner.style.width = '95%';
+      banner.style.margin = '8px auto';
+      banner.style.marginBottom = '8px';
+      banner.style.zIndex = '2147483647';
+      console.log('[Copilot Extension] Warning banner injected inside email box:', emailBox);
+    } else {
+      console.warn('[Copilot Extension] Email box element not found. Warning banner not injected.');
+    }
+  } else if (window.location.hostname.includes('mail.zoho.com')) {
+    emailBox = document.querySelector('div.zmMsgView') || document.querySelector('div[role="main"]');
+    if (emailBox) {
+      emailBox.insertBefore(banner, emailBox.firstChild);
+      banner.style.position = 'relative';
+      banner.style.width = '95%';
+      banner.style.margin = '8px auto';
+      banner.style.marginBottom = '8px';
+      banner.style.zIndex = '2147483647';
+      console.log('[Copilot Extension] Warning banner injected inside email box:', emailBox);
+    } else {
+      console.warn('[Copilot Extension] Email box element not found. Warning banner not injected.');
+    }
+  }
 }
 
 // Only run the sender/subject check and banner injection once per page load
@@ -313,21 +468,27 @@ let lastSender = null;
 let lastSubject = null;
 
 function tryInjectOnChange() {
+  // Always search for the reading pane div before checking sender/subject
+  if (window.location.hostname.includes('outlook.live.com')) {
+    document.getElementById('Skip to message-region');
+  }
   const sender = getSenderAddress();
   const subject = getEmailSubject();
   // Only update banner if sender or subject has changed
   if (sender !== lastSender || subject !== lastSubject) {
     console.log('[Copilot Extension] Email or subject changed, updating banner');
     const warning = checkSenderWarning(sender, subject);
-    if (sender || warning) {
+    if (warning) {
       injectBanner(sender, warning);
     } else {
+      // Only remove banner if there is no warning for the current email
       const oldBanner = document.getElementById('copilot-email-banner');
       if (oldBanner) oldBanner.remove();
     }
     lastSender = sender;
     lastSubject = subject;
   } else {
+    // If the banner exists and warning is still valid, do nothing (persist banner)
     console.log('[Copilot Extension] Sender and subject unchanged, not updating banner');
   }
 }

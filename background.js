@@ -21,14 +21,14 @@ chrome.action.onClicked.addListener(() => {
 let DEFAULT_BAD_URLS = [];
 
 function loadDefaultBadUrls(callback) {
-  fetch('https://raw.githubusercontent.com/yourusername/yourrepo/main/default_bad_urls.json')
+  fetch('https://raw.githubusercontent.com/Miyso/ScamBlocker/main/default_bad_urls.json')
     .then(response => response.json())
     .then(json => {
       DEFAULT_BAD_URLS = json;
       if (callback) callback();
     })
     .catch(err => {
-      console.error('[Copilot Extension] Failed to load default_bad_urls.json from GitHub:', err);
+      console.error('[ScamBlocker] Failed to load default_bad_urls.json from GitHub:', err);
       DEFAULT_BAD_URLS = [];
       if (callback) callback();
     });
