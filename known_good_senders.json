@@ -1,6 +1,6 @@
 [
   {"company": "Amazon", "email": "no-reply@amazon.com"},
-  {"company": "PayPal", "email": "service@paypal.com"},
+  {"company": "PayPal", "email": "service2@paypal.com"},
   {"company": "Microsoft", "email": "account-security-noreply@accountprotection.microsoft.com"},
   {"company": "Apple", "email": "no_reply@email.apple.com"},
   {"company": "Google", "email": "no-reply@accounts.google.com"},
@@ -11,3 +11,4 @@
   {"company": "Netflix", "email": "no-reply@netflix.com"},
   {"company": "Mobile Computer Doctors", "email": "testme@gmail.com"}
 ]
+
