@@ -12,7 +12,7 @@ chrome.runtime.onInstalled.addListener(() => {
 
 // Open settings page when extension icon is clicked
 chrome.action.onClicked.addListener(() => {
-  chrome.tabs.create({ url: chrome.runtime.getURL('settings.html') });
+  chrome.tabs.create({ url: chrome.runtime.getURL('src/settings/settings.html') });
 });
 
 
@@ -52,7 +52,7 @@ function updateBlockedRules() {
         action: {
           type: 'redirect',
           redirect: {
-            url: chrome.runtime.getURL('pages/blocked.html')
+            url: chrome.runtime.getURL('assets/pages/blocked.html')
           }
         },
         condition: { urlFilter, resourceTypes: ["main_frame"] }

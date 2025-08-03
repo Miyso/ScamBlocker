@@ -5,7 +5,7 @@
   "description": "ScamBlocker: Warns about suspicious emails and blocks scam URLs.",
   "action": {},
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "worker.js"
   },
   "permissions": [
     "storage",
@@ -16,11 +16,11 @@
   ],
   "web_accessible_resources": [
     {
-      "resources": ["pages/blocked.html"],
+      "resources": ["assets/pages/blocked.html"],
       "matches": ["<all_urls>"]
     },
     {
-      "resources": ["data/knownGoodSenders.json", "data/defaultBadUrls.json"],
+         "resources": ["data/knownGoodSenders.json", "data/defaultBadUrls.json"],
       "matches": ["<all_urls>"]
     }
   ],
@@ -31,7 +31,7 @@
         "https://outlook.live.com/*",
         "https://mail.yahoo.com/*"
       ],
-      "js": ["content-email-banner.js"],
+      "js": ["emailservice.js"],
       "run_at": "document_idle"
     }
   ]

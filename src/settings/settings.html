@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>URL Blocker Settings</title>
+  <title>Scam Blocker Settings</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=672">
   <style>
@@ -162,7 +162,7 @@
   </style>
 </head>
   <body>
-    <h1>ScamBlocker Settings</h1>
+    <h1>Scam Blocker Settings</h1>
     <div class="container">
       <div class="column left">
         <h2>Add URL to Blocklist</h2>
@@ -181,7 +181,7 @@
         <div style="margin-bottom:18px;">
           <label>
             <input type="checkbox" id="toggleShowSenderBanner" />
-            Show sender banner
+            Show warning alert for suspicious senders
           </label>
           <label>
             <input type="checkbox" id="toggleScanSubject" />
@@ -192,8 +192,119 @@
             Scan body for impersonation attempts
           </label>
         </div>
+        <div style="background:#e0e7ff;border-radius:12px;padding:20px 18px;margin-top:8px;box-shadow:0 2px 12px rgba(37,99,235,0.08);font-size:1.05em;color:#1e293b;font-weight:500;">
+          <strong>Currently Supported Webmail Providers</strong><br>
+          <span style="font-size:0.98em;color:#334155;">Gmail & Outlook</span><br><br>
+          <strong>Being Developed Webmail Providers</strong><br>
+          <span style="font-size:0.98em;color:#334155;">Yahoo, ProtonMail, Zoho Mail, Spectrum, Roadrunner</span>
+        </div>
+        <div style="background:#fff7ed;border-radius:12px;padding:18px 16px;margin-top:18px;box-shadow:0 2px 12px rgba(251,146,60,0.08);font-size:1.05em;color:#7c2d12;font-weight:500;">
+          <label for="bugReportInput" style="font-size:1em;color:#b45309;font-weight:600;display:block;margin-bottom:8px;">Bug Reports or Suggestions for URLs/Emails to be added</label>
+          <div style="display:flex;justify-content:center;align-items:center;width:100%;margin-top:8px;">
+            <a href="https://github.com/Miyso/ScamBlocker/issues" target="_blank" rel="noopener" style="display:inline-block;background:linear-gradient(90deg,#f59e42 60%,#fbbf24 100%);color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:1em;font-weight:600;cursor:pointer;box-shadow:0 1px 4px rgba(251,146,60,0.08);text-decoration:none;text-align:center;">Report or Suggest on GitHub</a>
+          </div>
+        </div>
       </div>
     </div>
+  <script>
+    // Simple input validation for block URL field
+    document.addEventListener('DOMContentLoaded', function() {
+      const blockUrlInput = document.getElementById('blockurl');
+      const blockBtn = document.getElementById('clickme');
+      const blockedList = document.getElementById('blockedList');
+      const blockedListEmptyMsg = document.getElementById('blockedListEmptyMsg');
+      let warnMsg = document.createElement('div');
+      warnMsg.id = 'blockurl-warning';
+      warnMsg.style.color = '#ef4444';
+      warnMsg.style.fontSize = '0.98em';
+      warnMsg.style.margin = '6px 0 0 0';
+      warnMsg.style.display = 'none';
+      blockUrlInput.parentNode.insertBefore(warnMsg, blockBtn.nextSibling);
+
+      // Helper: get user blocked URLs from chrome.storage.local
+      function getUserBlockedUrls(callback) {
+        if (chrome && chrome.storage && chrome.storage.local) {
+          chrome.storage.local.get(['userBlockedUrls'], function(result) {
+            callback(Array.isArray(result.userBlockedUrls) ? result.userBlockedUrls : []);
+          });
+        } else {
+          callback([]);
+        }
+      }
+
+      // Helper: set user blocked URLs in chrome.storage.local
+      function setUserBlockedUrls(urls, callback) {
+        if (chrome && chrome.storage && chrome.storage.local) {
+          chrome.storage.local.set({ userBlockedUrls: urls }, callback);
+        } else {
+          if (callback) callback();
+        }
+      }
+
+      // Render blocked URLs list
+      function renderBlockedList(urls) {
+        blockedList.innerHTML = '';
+        urls.forEach(function(url, idx) {
+          const li = document.createElement('li');
+          li.textContent = url;
+          const removeBtn = document.createElement('button');
+          removeBtn.className = 'remove-btn';
+          removeBtn.textContent = 'Remove';
+          removeBtn.onclick = function() {
+            const newUrls = urls.slice(0, idx).concat(urls.slice(idx + 1));
+            setUserBlockedUrls(newUrls, function() {
+              renderBlockedList(newUrls);
+            });
+          };
+          li.appendChild(removeBtn);
+          blockedList.appendChild(li);
+        });
+      }
+
+      // Validate input
+      function validateUrlInput(value) {
+        if (!value.trim()) return 'Please enter a URL or pattern.';
+        if (!/^([*]?[\w.-]+\.[a-zA-Z]{2,}.*)$/.test(value.trim())) return 'Please enter a valid URL or pattern.';
+        return '';
+      }
+
+      // Add new blocked URL
+      blockBtn.addEventListener('click', function(e) {
+        const value = blockUrlInput.value.trim();
+        const error = validateUrlInput(value);
+        if (error) {
+          warnMsg.textContent = error;
+          warnMsg.style.display = 'block';
+          e.preventDefault();
+          blockUrlInput.focus();
+        } else {
+          warnMsg.style.display = 'none';
+          getUserBlockedUrls(function(urls) {
+            if (!urls.includes(value)) {
+              const newUrls = urls.concat([value]);
+              setUserBlockedUrls(newUrls, () => {
+                renderBlockedList(newUrls);
+                blockUrlInput.value = '';
+              });
+            }
+          });
+        }
+      });
+
+      blockUrlInput.addEventListener('input', function() {
+        const error = validateUrlInput(blockUrlInput.value);
+        if (error) {
+          warnMsg.textContent = error;
+          warnMsg.style.display = 'block';
+        } else {
+          warnMsg.style.display = 'none';
+        }
+      });
+
+      // Initial render
+      getUserBlockedUrls(renderBlockedList);
+    });
+  </script>
   <script src="settings.js"></script>
 </body>
 </html>
