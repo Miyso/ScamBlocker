@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>URL Blocker Settings</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=672">
+  <style>
+    body {
+      font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(120deg, #f4f6fb 0%, #e0e7ff 100%);
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0;
+      display: flex;
+      gap: 32px;
+      justify-content: center;
+      align-items: flex-start;
+    }
+    h1 {
+      font-size: 2.2em;
+      margin-bottom: 32px;
+      color: #2563eb;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-align: center;
+      text-shadow: 0 2px 8px rgba(37,99,235,0.08);
+    }
+    h2 {
+      font-size: 1.25em;
+      color: #1e293b;
+      font-weight: 700;
+      margin-bottom: 18px;
+      letter-spacing: 0.5px;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #c7d2fe;
+      border-radius: 10px;
+      font-size: 1.05em;
+      margin-bottom: 14px;
+      box-sizing: border-box;
+      background: #f8fafc;
+      transition: border 0.2s;
+    }
+    input[type="text"]:focus {
+      border-color: #2563eb;
+      outline: none;
+    }
+    button {
+      background: linear-gradient(90deg, #2563eb 60%, #60a5fa 100%);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 22px;
+      font-size: 1.05em;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 0;
+      margin-bottom: 14px;
+      box-shadow: 0 2px 8px rgba(37,99,235,0.08);
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+    button:hover {
+      background: linear-gradient(90deg, #174ea6 60%, #2563eb 100%);
+      box-shadow: 0 4px 16px rgba(37,99,235,0.12);
+    }
+    h3 {
+      font-size: 1.05em;
+      margin-top: 18px;
+      margin-bottom: 8px;
+      color: #374151;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    li {
+      background: #f8fafc;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 1em;
+      box-shadow: 0 1px 4px rgba(37,99,235,0.04);
+      transition: box-shadow 0.2s;
+    }
+    li:hover {
+      box-shadow: 0 2px 8px rgba(37,99,235,0.10);
+    }
+    .remove-btn {
+      background: linear-gradient(90deg, #ef4444 60%, #f87171 100%);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 5px 14px;
+      font-size: 0.98em;
+      font-weight: 600;
+      cursor: pointer;
+      margin-left: 10px;
+      box-shadow: 0 1px 4px rgba(239,68,68,0.08);
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+    .remove-btn:hover {
+      background: linear-gradient(90deg, #b91c1c 60%, #ef4444 100%);
+      box-shadow: 0 2px 8px rgba(239,68,68,0.16);
+    }
+    .column {
+      flex: 1;
+      min-width: 320px;
+      border-radius: 18px;
+      padding: 38px 28px;
+      box-shadow: 0 4px 24px rgba(37,99,235,0.10);
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      position: relative;
+    }
+    .column.left {
+      background: #e0e7ff;
+    }
+    .column.right {
+      background: #f1f5f9;
+    }
+    label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+      font-size: 1em;
+      color: #334155;
+      font-weight: 500;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    label input[type="checkbox"] {
+      accent-color: #2563eb;
+      transform: scale(1.2);
+      margin-right: 6px;
+    }
+    @media (max-width: 900px) {
+      .container {
+        flex-direction: column;
+        gap: 24px;
+        max-width: 98vw;
+      }
+      .column {
+        padding: 28px 12px;
+      }
+    }
+  </style>
+</head>
+  <body>
+    <h1>ScamBlocker Settings</h1>
+    <div class="container">
+      <div class="column left">
+        <h2>Add URL to Blocklist</h2>
+        <input type="text" id="blockurl" placeholder="Enter URL or pattern to block (e.g. *example.com/*)" />
+        <button id="clickme">Block URL</button>
+        <h3 style="display:flex;align-items:center;gap:12px;">
+          Default Blocked URLs
+          <input type="checkbox" id="toggleDefaultBlocked" style="transform:scale(1.3);margin-left:8px;vertical-align:middle;" />
+        </h3>
+        <ul id="defaultBlockedList"></ul>
+        <h3>Your Blocked URLs</h3>
+        <ul id="blockedList"></ul>
+      </div>
+      <div class="column right">
+        <h2 style="margin-top:0;">Email Scanning Features</h2>
+        <div style="margin-bottom:18px;">
+          <label>
+            <input type="checkbox" id="toggleShowSenderBanner" />
+            Show sender banner
+          </label>
+          <label>
+            <input type="checkbox" id="toggleScanSubject" />
+            Scan subject for impersonation attempts
+          </label>
+          <label>
+            <input type="checkbox" id="toggleScanBody" />
+            Scan body for impersonation attempts
+          </label>
+        </div>
+      </div>
+    </div>
+  <script src="settings.js"></script>
+</body>
+</html>

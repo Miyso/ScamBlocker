@@ -1,3 +1,6 @@
+
+
+
 function matchesDefaultBadUrl(urlInput) {
   return DEFAULT_BAD_URLS.some(pattern => {
     // Convert * to .*
@@ -30,6 +33,7 @@ function addBlockedUrl() {
   });
 }
 
+
 function removeBlockedUrl(urlToRemove) {
   chrome.storage.sync.get(['blockedUrls'], (result) => {
     let blocked = result.blockedUrls || [];
@@ -40,11 +44,13 @@ function removeBlockedUrl(urlToRemove) {
   });
 }
 
+
+
 let DEFAULT_BAD_URLS = [];
 let defaultBlockedEnabled = true;
 
 function loadDefaultBadUrls(callback) {
-  fetch('https://raw.githubusercontent.com/Miyso/ScamBlocker/main/default_bad_urls.json')
+  fetch('https://raw.githubusercontent.com/yourusername/yourrepo/main/default_bad_urls.json')
     .then(response => response.json())
     .then(json => {
       DEFAULT_BAD_URLS = json;
@@ -54,7 +60,7 @@ function loadDefaultBadUrls(callback) {
       });
     })
     .catch(err => {
-      console.error('[ScamBlocker] Failed to load default_bad_urls.json from GitHub:', err);
+      console.error('[Copilot Extension] Failed to load src/data/defaultBadUrls.json from GitHub:', err);
       DEFAULT_BAD_URLS = [];
       if (callback) callback();
     });
@@ -100,16 +106,8 @@ function renderBlockedUrls() {
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('clickme').addEventListener('click', addBlockedUrl);
   const toggle = document.getElementById('toggleDefaultBlocked');
-  chrome.storage.sync.get([
-    'defaultBlockedEnabled',
-    'showSenderBanner',
-    'scanSubjectForImpersonation',
-    'scanBodyForImpersonation'
-  ], (result) => {
+  chrome.storage.sync.get(['defaultBlockedEnabled'], (result) => {
     toggle.checked = result.defaultBlockedEnabled !== false;
-    document.getElementById('toggleShowSenderBanner').checked = result.showSenderBanner !== false;
-    document.getElementById('toggleScanSubject').checked = !!result.scanSubjectForImpersonation;
-    document.getElementById('toggleScanBody').checked = !!result.scanBodyForImpersonation;
   });
   toggle.addEventListener('change', (e) => {
     chrome.storage.sync.set({ defaultBlockedEnabled: toggle.checked }, () => {
@@ -118,16 +116,5 @@ document.addEventListener('DOMContentLoaded', () => {
       chrome.runtime.sendMessage({ type: 'updateDefaultBlockedEnabled', enabled: toggle.checked });
     });
   });
-
-  document.getElementById('toggleShowSenderBanner').addEventListener('change', (e) => {
-    chrome.storage.sync.set({ showSenderBanner: e.target.checked });
-  });
-  document.getElementById('toggleScanSubject').addEventListener('change', (e) => {
-    chrome.storage.sync.set({ scanSubjectForImpersonation: e.target.checked });
-  });
-  document.getElementById('toggleScanBody').addEventListener('change', (e) => {
-    chrome.storage.sync.set({ scanBodyForImpersonation: e.target.checked });
-  });
-
   loadDefaultBadUrls(renderBlockedUrls);
 });

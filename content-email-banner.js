@@ -22,9 +22,8 @@ function getEmailBody() {
   }
   return bodyText;
 }
-// content-email-banner.js
+// src/content/emailBanner.js
 // Injects a banner showing the current 'from' email address on supported webmail sites
-
 
 function getSenderAddress() {
   // Gmail
@@ -171,14 +170,14 @@ let injectTimeout = null;
 let KNOWN_GOOD_SENDERS = [];
 
 function loadKnownGoodSenders(callback) {
-  fetch('https://raw.githubusercontent.com/Miyso/ScamBlocker/main/known_good_senders.json')
+  fetch('https://raw.githubusercontent.com/Miyso/ScamBlocker/main/src/data/knownGoodSenders.json')
     .then(response => response.json())
     .then(json => {
       KNOWN_GOOD_SENDERS = json;
       if (callback) callback();
     })
     .catch(err => {
-      console.error('[Copilot Extension] Failed to load known_good_senders.json from GitHub:', err);
+      console.error('[Copilot Extension] Failed to load src/data/knownGoodSenders.json from GitHub:', err);
       KNOWN_GOOD_SENDERS = [];
       if (callback) callback();
     });

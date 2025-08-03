@@ -1,0 +1,38 @@
+{
+  "manifest_version": 3,
+  "name": "ScamBlocker",
+  "version": "1.0",
+  "description": "ScamBlocker: Warns about suspicious emails and blocks scam URLs.",
+  "action": {},
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "storage",
+    "declarativeNetRequest"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["pages/blocked.html"],
+      "matches": ["<all_urls>"]
+    },
+    {
+      "resources": ["data/knownGoodSenders.json", "data/defaultBadUrls.json"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://mail.google.com/*",
+        "https://outlook.live.com/*",
+        "https://mail.yahoo.com/*"
+      ],
+      "js": ["content-email-banner.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}

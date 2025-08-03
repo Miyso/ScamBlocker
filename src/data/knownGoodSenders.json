@@ -1,0 +1,423 @@
+[
+  {"company": "Amazon", "emails": [
+    "no-reply@amazon.com",
+    "account-update@amazon.com",
+    "auto-confirm@amazon.com",
+    "order-update@amazon.com",
+    "ship-confirm@amazon.com",
+    "digital-no-reply@amazon.com",
+    "store-news@amazon.com",
+    "amazon-pay-noreply@amazon.com",
+    "cs-reply@amazon.com",
+    "no-reply@amazonpay.com"
+  ]},
+  {"company": "PayPal", "emails": [
+    "service@paypal.com",
+    "service@intl.paypal.com",
+    "member@paypal.com",
+    "paypal@paypal.com",
+    "no-reply@paypal.com",
+    "support@paypal.com",
+    "customerservice@paypal.com",
+    "account@paypal.com",
+    "askpaypal@paypal.com"
+  ]},
+  {"company": "Microsoft", "emails": [
+    "account-security-noreply@accountprotection.microsoft.com",
+    "security-noreply@accountprotection.microsoft.com",
+    "microsoft@communication.microsoft.com",
+    "msft@support.microsoft.com",
+    "support@microsoft.com",
+    "no-reply@microsoft.com",
+    "no-reply@store.microsoft.com",
+    "no-reply@orders.microsoft.com",
+    "no-reply@office.com",
+    "no-reply@outlook.com",
+    "no-reply@live.com",
+    "no-reply@onedrive.com",
+    "no-reply@xbox.com",
+    "no-reply@skype.com",
+    "no-reply@microsoftstore.com",
+    "no-reply@account.microsoft.com",
+    "no-reply@cloud.microsoft.com",
+    "no-reply@azure.com",
+    "no-reply@teams.microsoft.com",
+    "no-reply@windows.com",
+    "store@microsoft.com",
+    "orders@microsoft.com",
+    "office@microsoft.com",
+    "outlook@microsoft.com",
+    "live@microsoft.com",
+    "onedrive@microsoft.com",
+    "xbox@microsoft.com",
+    "skype@microsoft.com",
+    "microsoftstore@microsoft.com",
+    "account@microsoft.com",
+    "cloud@microsoft.com",
+    "azure@microsoft.com",
+    "teams@microsoft.com",
+    "windows@microsoft.com"
+  ]},
+  {"company": "Apple", "emails": [
+    "no_reply@email.apple.com",
+    "appleid@id.apple.com",
+    "noreply@apple.com",
+    "support@apple.com",
+    "donotreply@apple.com",
+    "no-reply@apple.com",
+    "no-reply@appleid.apple.com",
+    "no-reply@itunes.com",
+    "no-reply@store.apple.com",
+    "no-reply@orders.apple.com",
+    "no-reply@id.apple.com",
+    "no-reply@email.apple.com",
+    "no-reply@apple.store.com",
+    "no-reply@apple.store.apple.com",
+    "no-reply@applemusic.com",
+    "no-reply@icloud.com",
+    "no-reply@me.com",
+    "no-reply@mac.com",
+    "no-reply@apple.news.com",
+    "no-reply@apple.com",
+    "store@apple.com",
+    "orders@apple.com",
+    "itunes@apple.com",
+    "applemusic@apple.com",
+    "icloud@apple.com",
+    "me@apple.com",
+    "mac@apple.com",
+    "news@apple.com"
+  ]},
+  {"company": "Google", "emails": [
+    "no-reply@accounts.google.com",
+    "noreply@google.com",
+    "google-noreply@google.com",
+    "support@google.com",
+    "account-security-noreply@google.com",
+    "googleplay-noreply@google.com",
+    "noreply-play@google.com",
+    "play-noreply@google.com",
+    "playstore-noreply@google.com",
+    "googleplay@google.com"
+  ]},
+  {"company": "Bank of America", "emails": [
+    "onlinebanking@ealerts.bankofamerica.com",
+    "bankofamerica@em.bankofamerica.com",
+    "customerservice@bankofamerica.com",
+    "alerts@bankofamerica.com"
+  ]},
+  {"company": "Chase", "emails": [
+    "alerts@chase.com",
+    "chase@e.chase.com",
+    "customerservice@chase.com",
+    "noreply@chase.com"
+  ]},
+  {"company": "Wells Fargo", "emails": [
+    "alerts@wellsfargo.com",
+    "wellsfargo@connect.wellsfargo.com",
+    "customerservice@wellsfargo.com",
+    "noreply@wellsfargo.com"
+  ]},
+  {"company": "American Express", "emails": [
+    "americanexpress@email.americanexpress.com",
+    "noreply@americanexpress.com",
+    "customerservice@americanexpress.com",
+    "alerts@aexp.com"
+  ]},
+  {"company": "Netflix", "emails": [
+    "no-reply@netflix.com",
+    "info@mailer.netflix.com",
+    "support@netflix.com",
+    "noreply@netflix.com"
+  ]},
+  {"company": "Navy Federal Credit Union", "emails": [
+    "noreply@navyfederal.org",
+    "onlinebanking@navyfederal.org",
+    "security@navyfederal.org",
+    "membercommunications@navyfederal.org",
+    "customerservice@navyfederal.org",
+    "alerts@navyfederal.org",
+    "navyfederal@e.navyfederal.org"
+  ]},
+  {"company": "First Bank", "emails": [
+    "noreply@localfirstbank.com",
+    "onlinebanking@localfirstbank.com",
+    "security@localfirstbank.com",
+    "customerservice@localfirstbank.com",
+    "alerts@localfirstbank.com",
+    "info@localfirstbank.com",
+    "support@localfirstbank.com"
+  ]},
+  {"company": "Truist", "emails": [
+    "noreply@truist.com",
+    "onlinebanking@truist.com",
+    "security@truist.com",
+    "customerservice@truist.com",
+    "alerts@truist.com",
+    "info@truist.com",
+    "support@truist.com",
+    "truist@e.truist.com"
+  ]},
+  {"company": "Capital One", "emails": [
+    "noreply@capitalone.com",
+    "onlinebanking@capitalone.com",
+    "security@capitalone.com",
+    "customerservice@capitalone.com",
+    "alerts@capitalone.com",
+    "info@capitalone.com",
+    "support@capitalone.com",
+    "capitalone@e.capitalone.com"
+  ]},
+  {"company": "Citi", "emails": [
+    "citi@info.citi.com",
+    "customerservice@citi.com",
+    "noreply@citi.com",
+    "alerts@citi.com",
+    "onlinebanking@citi.com"
+  ]},
+  {"company": "PNC", "emails": [
+    "pnc@pnc.com",
+    "customerservice@pnc.com",
+    "noreply@pnc.com",
+    "alerts@pnc.com",
+    "onlinebanking@pnc.com"
+  ]},
+  {"company": "U.S. Bank", "emails": [
+    "usbank@usbank.com",
+    "customerservice@usbank.com",
+    "noreply@usbank.com",
+    "alerts@usbank.com",
+    "onlinebanking@usbank.com"
+  ]},
+  {"company": "TD Bank", "emails": [
+    "tdbank@td.com",
+    "customerservice@td.com",
+    "noreply@td.com",
+    "alerts@td.com",
+    "onlinebanking@td.com"
+  ]},
+  {"company": "Regions", "emails": [
+    "regions@regions.com",
+    "customerservice@regions.com",
+    "noreply@regions.com",
+    "alerts@regions.com",
+    "onlinebanking@regions.com"
+  ]},
+  {"company": "Fifth Third Bank", "emails": [
+    "53bank@53.com",
+    "customerservice@53.com",
+    "noreply@53.com",
+    "alerts@53.com",
+    "onlinebanking@53.com"
+  ]},
+  {"company": "Santander", "emails": [
+    "santander@santander.us",
+    "customerservice@santander.us",
+    "noreply@santander.us",
+    "alerts@santander.us",
+    "onlinebanking@santander.us"
+  ]},
+  {"company": "Norton", "emails": [
+    "noreply@norton.com",
+    "support@norton.com",
+    "customerservice@norton.com",
+    "alerts@norton.com",
+    "norton@e.norton.com"
+  ]},
+  {"company": "Avast", "emails": [
+    "noreply@avast.com",
+    "support@avast.com",
+    "customerservice@avast.com",
+    "alerts@avast.com",
+    "avast@e.avast.com"
+  ]},
+  {"company": "McAfee", "emails": [
+    "noreply@mcafee.com",
+    "support@mcafee.com",
+    "customerservice@mcafee.com",
+    "alerts@mcafee.com",
+    "mcafee@e.mcafee.com"
+  ]},
+  {"company": "Kaspersky", "emails": [
+    "noreply@kaspersky.com",
+    "support@kaspersky.com",
+    "customerservice@kaspersky.com",
+    "alerts@kaspersky.com",
+    "kaspersky@e.kaspersky.com"
+  ]},
+  {"company": "Bitdefender", "emails": [
+    "noreply@bitdefender.com",
+    "support@bitdefender.com",
+    "customerservice@bitdefender.com",
+    "alerts@bitdefender.com",
+    "bitdefender@e.bitdefender.com"
+  ]},
+  {"company": "Malwarebytes", "emails": [
+    "noreply@malwarebytes.com",
+    "support@malwarebytes.com",
+    "customerservice@malwarebytes.com",
+    "alerts@malwarebytes.com",
+    "malwarebytes@e.malwarebytes.com"
+  ]},
+  {"company": "Vanguard", "emails": [
+    "noreply@vanguard.com",
+    "support@vanguard.com",
+    "customerservice@vanguard.com",
+    "alerts@vanguard.com",
+    "vanguard@e.vanguard.com"
+  ]},
+  {"company": "Fidelity", "emails": [
+    "noreply@fidelity.com",
+    "support@fidelity.com",
+    "customerservice@fidelity.com",
+    "alerts@fidelity.com",
+    "fidelity@e.fidelity.com"
+  ]},
+  {"company": "Charles Schwab", "emails": [
+    "noreply@schwab.com",
+    "support@schwab.com",
+    "customerservice@schwab.com",
+    "alerts@schwab.com",
+    "schwab@e.schwab.com"
+  ]},
+  {"company": "E*TRADE", "emails": [
+    "noreply@etrade.com",
+    "support@etrade.com",
+    "customerservice@etrade.com",
+    "alerts@etrade.com",
+    "etrade@e.etrade.com"
+  ]},
+  {"company": "TD Ameritrade", "emails": [
+    "noreply@tdameritrade.com",
+    "support@tdameritrade.com",
+    "customerservice@tdameritrade.com",
+    "alerts@tdameritrade.com",
+    "tdameritrade@e.tdameritrade.com"
+  ]},
+  {"company": "Robinhood", "emails": [
+    "noreply@robinhood.com",
+    "support@robinhood.com",
+    "customerservice@robinhood.com",
+    "alerts@robinhood.com",
+    "robinhood@e.robinhood.com"
+  ]},
+  {"company": "E*TRADE", "emails": [
+    "noreply@etrade.com",
+    "support@etrade.com",
+    "customerservice@etrade.com",
+    "alerts@etrade.com",
+    "etrade@e.etrade.com"
+  ]},
+  {"company": "Merrill Lynch", "emails": [
+    "noreply@merrill.com",
+    "support@merrill.com",
+    "customerservice@merrill.com",
+    "alerts@merrill.com",
+    "merrill@e.merrill.com"
+  ]},
+  {"company": "Edward Jones", "emails": [
+    "noreply@edwardjones.com",
+    "support@edwardjones.com",
+    "customerservice@edwardjones.com",
+    "alerts@edwardjones.com",
+    "edwardjones@e.edwardjones.com"
+  ]},
+  {"company": "T. Rowe Price", "emails": [
+    "noreply@troweprice.com",
+    "support@troweprice.com",
+    "customerservice@troweprice.com",
+    "alerts@troweprice.com",
+    "troweprice@e.troweprice.com"
+  ]},
+  {"company": "Ameriprise", "emails": [
+    "noreply@ameriprise.com",
+    "support@ameriprise.com",
+    "customerservice@ameriprise.com",
+    "alerts@ameriprise.com",
+    "ameriprise@e.ameriprise.com"
+  ]},
+  {"company": "J.P. Morgan", "emails": [
+    "noreply@jpmorgan.com",
+    "support@jpmorgan.com",
+    "customerservice@jpmorgan.com",
+    "alerts@jpmorgan.com",
+    "jpmorgan@e.jpmorgan.com"
+  ]},
+  {"company": "Ally Invest", "emails": [
+    "noreply@ally.com",
+    "support@ally.com",
+    "customerservice@ally.com",
+    "alerts@ally.com",
+    "ally@e.ally.com"
+  ]},
+  {"company": "Walmart", "emails": [
+    "noreply@walmart.com",
+    "support@walmart.com",
+    "customerservice@walmart.com",
+    "alerts@walmart.com",
+    "walmart@e.walmart.com"
+  ]},
+  {"company": "Best Buy", "emails": [
+    "noreply@bestbuy.com",
+    "support@bestbuy.com",
+    "customerservice@bestbuy.com",
+    "alerts@bestbuy.com",
+    "bestbuy@e.bestbuy.com"
+  ]},
+  {"company": "Target", "emails": [
+    "noreply@target.com",
+    "support@target.com",
+    "customerservice@target.com",
+    "alerts@target.com",
+    "target@e.target.com"
+  ]},
+  {"company": "eBay", "emails": [
+    "noreply@ebay.com",
+    "support@ebay.com",
+    "customerservice@ebay.com",
+    "alerts@ebay.com",
+    "ebay@e.ebay.com"
+  ]},
+  {"company": "Costco", "emails": [
+    "noreply@costco.com",
+    "support@costco.com",
+    "customerservice@costco.com",
+    "alerts@costco.com",
+    "costco@e.costco.com"
+  ]},
+  {"company": "Home Depot", "emails": [
+    "noreply@homedepot.com",
+    "support@homedepot.com",
+    "customerservice@homedepot.com",
+    "alerts@homedepot.com",
+    "homedepot@e.homedepot.com"
+  ]},
+  {"company": "Lowe's", "emails": [
+    "noreply@lowes.com",
+    "support@lowes.com",
+    "customerservice@lowes.com",
+    "alerts@lowes.com",
+    "lowes@e.lowes.com"
+  ]},
+  {"company": "Wayfair", "emails": [
+    "noreply@wayfair.com",
+    "support@wayfair.com",
+    "customerservice@wayfair.com",
+    "alerts@wayfair.com",
+    "wayfair@e.wayfair.com"
+  ]},
+  {"company": "Overstock", "emails": [
+    "noreply@overstock.com",
+    "support@overstock.com",
+    "customerservice@overstock.com",
+    "alerts@overstock.com",
+    "overstock@e.overstock.com"
+  ]},
+  {"company": "Macy's", "emails": [
+    "noreply@macys.com",
+    "support@macys.com",
+    "customerservice@macys.com",
+    "alerts@macys.com",
+    "macys@e.macys.com"
+  ]}
+]
