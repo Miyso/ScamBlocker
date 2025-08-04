@@ -28,9 +28,9 @@ function loadDefaultBadUrls(callback) {
       if (callback) callback();
     })
     .catch(err => {
-      console.error('[ScamBlocker] Failed to load src/data/defaultBadUrls.json from GitHub:', err);
-      DEFAULT_BAD_URLS = [];
-      if (callback) callback();
+        console.error('[ScamBlocker] Failed to load src/data/defaultBadUrls.json from GitHub:', err);
+        DEFAULT_BAD_URLS = [];
+        if (callback) callback();
     });
 }
 
